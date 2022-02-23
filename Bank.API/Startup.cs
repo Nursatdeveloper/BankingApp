@@ -1,7 +1,13 @@
+using Bank.Core.Repositories;
+using Bank.Core.Repositories.Base;
+using Bank.Infrastructure.Data;
+using Bank.Infrastructure.Repositories;
+using Bank.Infrastructure.Repositories.Base;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +38,13 @@ namespace Bank.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bank.API", Version = "v1" });
             });
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")), ServiceLifetime.Singleton);
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<IBankOperationRepository, BankOperationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
