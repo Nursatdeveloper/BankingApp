@@ -1,5 +1,8 @@
 ﻿using Bank.Core.Entities;
 using Bank.Core.Repositories;
+using Bank.Infrastructure.Data;
+using Bank.Infrastructure.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,37 +11,45 @@ using System.Threading.Tasks;
 
 namespace Bank.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : Repository<User>, IUserRepository
     {
-        private InMemUserData _context;
-        //private readonly ApplicationDbContext _context;
-        public UserRepository()
+        public UserRepository(ApplicationDbContext context) : base(context)
         {
-
-        }
-        public Task<User> AddAsync(User entity)
-        {
-            throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(User entity)
+        /*private readonly UserContext _context;
+        public UserRepository(UserContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<User> AddAsync(User entity)
+        {
+            await _context.Users.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<IReadOnlyList<User>> GetAllAsync()
+        public async Task DeleteAsync(User entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Remove(entity);
+            await _context.SaveChangesAsync();
+
         }
 
-        public Task<User> GetByIdAsync(int id)
+        public async Task<IReadOnlyList<User>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Users.ToListAsync();
         }
 
-        public Task UpdateAsync(User entity)
+        public async Task<User> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Users.FindAsync(id);
         }
+
+        public async Task UpdateAsync(User entity)
+        {
+            _context.Users.Update(entity);
+            await _context.SaveChangesAsync();
+        }*/
     }
 }
