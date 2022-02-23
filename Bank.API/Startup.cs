@@ -1,8 +1,10 @@
+using Bank.Application.Handlers.UserCommandHandlers;
 using Bank.Core.Repositories;
 using Bank.Core.Repositories.Base;
 using Bank.Infrastructure.Data;
 using Bank.Infrastructure.Repositories;
 using Bank.Infrastructure.Repositories.Base;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Bank.API
@@ -45,6 +48,9 @@ namespace Bank.API
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IBankOperationRepository, BankOperationRepository>();
+
+            services.AddAutoMapper(typeof(Startup));
+            services.AddMediatR(typeof(CreateUserHandler).GetTypeInfo().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
