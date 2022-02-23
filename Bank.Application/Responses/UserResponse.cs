@@ -15,7 +15,6 @@ namespace Bank.Application.Responses
         public string IIN { get; set; }
         public DateTime BirthDate { get; set; }
         public string Gender { get; set; }
-        public byte[] Photo { get; set; }
         public string Password { get; set; }
         public string CardNumber { get; set; }
         public string PhoneNumber { get; set; }
