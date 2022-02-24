@@ -13,5 +13,6 @@ namespace Bank.Core.Repositories
         Task<User> GetUserById(int id);
         Task<User> FindUserByIIN(string IIN);
         Task<User> FindUserByCardNumber(string cardNumber);
+        Task<User> FindUserByPhoneNumber(string phoneNumber);
     }
 }

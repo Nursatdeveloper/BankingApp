@@ -44,7 +44,7 @@ namespace Bank.API.Controllers
         [Route("create-user")]
         public async Task<JsonResult> CreateUser([FromBody] CreateUserCommand command)
         {
-            if(_userValidator.ValidateIIN(command.IIN))
+            if(_userValidator.ValidateIIN(command.IIN) && _userValidator.ValidatePhoteNumber(command.PhoneNumber))
             {
                 var result = await _mediator.Send(command);
                 return new JsonResult(result);

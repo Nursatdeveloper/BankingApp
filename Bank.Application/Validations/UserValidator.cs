@@ -31,5 +31,14 @@ namespace Bank.Application.Validations
             }
             return false;
         }
+
+        public bool ValidatePhoteNumber(string phoneNumber)
+        {
+            if(_userRepository.FindUserByPhoneNumber(phoneNumber) is null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace Bank.Application.Validations
     {
         bool ValidateCardNumberForUniqueness(string cardNumber);
         bool ValidateIIN(string IIN);
+        bool ValidatePhoteNumber(string phoneNumber);
     }
 }

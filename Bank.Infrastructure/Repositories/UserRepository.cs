@@ -29,6 +29,12 @@ namespace Bank.Infrastructure.Repositories
             return user;
         }
 
+        public async Task<User> FindUserByPhoneNumber(string phoneNumber)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(e => e.PhoneNumber == phoneNumber);
+            return user;
+        }
+
         public async Task<User> GetUserById(int id)
         {
             var user = await _context.Users.Include(e => e.Accounts).FirstAsync(e => e.UserId == id);
