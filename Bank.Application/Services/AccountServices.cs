@@ -1,4 +1,5 @@
-﻿using Bank.Core.Entities;
+﻿using Bank.Application.Validations;
+using Bank.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,11 @@ namespace Bank.Application.Services
 {
     public class AccountServices : IAccountServices
     {
+        private readonly IAccountValidator _accountValidator;
+        public AccountServices(IAccountValidator accountValidator)
+        {
+            _accountValidator = accountValidator;
+        }
         public Account ActivateAccountFor(User user, string accountType)
         {
             Account account = new();
@@ -25,7 +31,7 @@ namespace Bank.Application.Services
             return account;
         }
 
-        public string GenerateAccountNumber(string accountType)
+        private string GenerateAccountNumber(string accountType)
         {
             string countryCode = "KZ75";
             string bankCode;
@@ -51,6 +57,11 @@ namespace Bank.Application.Services
             }
 
             string accountNumber = countryCode + bankCode + userCode;
+            bool isUnique = _accountValidator.ValidateAccountNumber(accountNumber);
+            if(!isUnique)
+            {
+                GenerateAccountNumber(accountType);
+            }
             return accountNumber;
         }
     }

@@ -2,6 +2,7 @@
 using Bank.Application.Mappers;
 using Bank.Application.Responses;
 using Bank.Application.Services;
+using Bank.Application.Validations;
 using Bank.Core.Entities;
 using Bank.Core.Repositories;
 using MediatR;
@@ -18,10 +19,12 @@ namespace Bank.Application.Handlers.UserCommandHandlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IUserServices _userServices;
-        public CreateUserHandler(IUserRepository userRepository, IUserServices userServices)
+        private readonly IUserValidator _userValidator;
+        public CreateUserHandler(IUserRepository userRepository, IUserServices userServices, IUserValidator userValidator)
         {
             _userRepository = userRepository;
             _userServices = userServices;
+            _userValidator = userValidator;
         }
         public async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
@@ -31,6 +34,7 @@ namespace Bank.Application.Handlers.UserCommandHandlers
                 throw new ApplicationException("Issue with mapper UserMapper");
             }
             userEntity.CardNumber = await _userServices.GenerateCardNumber();
+            
             User newUser = await _userRepository.AddAsync(userEntity);
             UserResponse userResponse = UserMapper.Mapper.Map<UserResponse>(newUser);
             return userResponse;

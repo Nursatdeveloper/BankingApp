@@ -1,4 +1,5 @@
-﻿using Bank.Core.Entities;
+﻿using Bank.Application.Validations;
+using Bank.Core.Entities;
 using Bank.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace Bank.Application.Services
 {
     public class UserServices : IUserServices
     {
-        private readonly IUserRepository _userRepository;
-        public UserServices(IUserRepository userRepository)
+        private readonly IUserValidator _userValidator;
+        public UserServices(IUserValidator userValidator)
         {
-            _userRepository = userRepository;
+            _userValidator = userValidator;
         }
         public async Task<string> GenerateCardNumber()
         {
@@ -27,7 +28,7 @@ namespace Bank.Application.Services
                 individualIdentNumberForUser += $"{number}";
             }
             string cardNumber = visa + bankNumber + individualIdentNumberForUser;
-            bool IsUnique =  _userRepository.VerifyForUniqueness(cardNumber);
+            bool IsUnique = _userValidator.ValidateCardNumberForUniqueness(cardNumber);
             if (!IsUnique)
             {
                 await GenerateCardNumber();

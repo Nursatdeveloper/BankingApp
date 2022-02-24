@@ -9,7 +9,6 @@ namespace Bank.Application.Services
 {
     public interface IAccountServices
     {
-        string GenerateAccountNumber(string accountType);
         Account ActivateAccountFor(User user, string accountType);
     }
 }

@@ -11,6 +11,7 @@ namespace Bank.Core.Repositories
     public interface IUserRepository : IRepository<User>
     {
         Task<User> GetUserById(int id);
-        bool VerifyForUniqueness(string cardNumber);
+        Task<User> FindUserByIIN(string IIN);
+        Task<User> FindUserByCardNumber(string cardNumber);
     }
 }

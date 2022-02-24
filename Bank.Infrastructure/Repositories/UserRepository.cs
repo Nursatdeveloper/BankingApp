@@ -17,20 +17,23 @@ namespace Bank.Infrastructure.Repositories
         {
         }
 
+        public async Task<User> FindUserByCardNumber(string cardNumber)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(e => e.CardNumber == cardNumber);
+            return user;
+        }
+
+        public async Task<User> FindUserByIIN(string IIN)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(e => e.IIN == IIN);
+            return user;
+        }
+
         public async Task<User> GetUserById(int id)
         {
             var user = await _context.Users.Include(e => e.Accounts).FirstAsync(e => e.UserId == id);
             return user;
         }
 
-        public bool VerifyForUniqueness(string cardNumber)
-        {
-            var user = _context.Users.FirstOrDefault(e => e.CardNumber == cardNumber);
-            if(user is null)
-            {
-                return true;
-            }
-            return false;
-        }
     }
 }

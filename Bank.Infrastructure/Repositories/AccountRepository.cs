@@ -17,5 +17,16 @@ namespace Bank.Infrastructure.Repositories
         {
         }
 
+        public async Task<Account> FindAccountByAccountNumber(string accountNumber)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(e => e.AccountNumber == accountNumber);
+            return account;
+        }
+
+        public async Task<Account> FindAccountByOwnerIIN(string IIN)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(e => e.OwnerIIN == IIN);
+            return account;
+        }
     }
 }

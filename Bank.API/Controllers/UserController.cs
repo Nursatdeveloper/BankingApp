@@ -2,6 +2,7 @@
 using Bank.Application.Queries.AccountQueries;
 using Bank.Application.Queries.UserQueries;
 using Bank.Application.Responses;
+using Bank.Application.Validations;
 using Bank.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -18,9 +19,11 @@ namespace Bank.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public UserController(IMediator mediator)
+        private readonly IUserValidator _userValidator;
+        public UserController(IMediator mediator, IUserValidator userValidator)
         {
             _mediator = mediator;
+            _userValidator = userValidator;
         }
 
         [HttpGet]
@@ -39,10 +42,15 @@ namespace Bank.API.Controllers
 
         [HttpPost]
         [Route("create-user")]
-        public async Task<ActionResult<UserResponse>> CreateUser([FromBody] CreateUserCommand command)
+        public async Task<JsonResult> CreateUser([FromBody] CreateUserCommand command)
         {
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            if(_userValidator.ValidateIIN(command.IIN))
+            {
+                var result = await _mediator.Send(command);
+                return new JsonResult(result);
+            }
+            return new JsonResult("В базе уже существует!");
+
         }
 
         [HttpDelete]
