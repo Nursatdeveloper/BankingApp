@@ -16,7 +16,7 @@ namespace Bank.Application.Handlers.UserQueryHandlers
         }
         public async Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _userRepository.GetByIdAsync(request.UserId);
+            return await _userRepository.GetUserById(request.UserId);
         }
     }
 }

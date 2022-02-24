@@ -25,7 +25,7 @@ namespace Bank.Application.Validations
 
         public bool ValidateIIN(string IIN)
         {
-            if(_userRepository.FindUserByIIN(IIN) is null)
+            if (_userRepository.FindUserByIIN(IIN) is null)
             {
                 return true;
             }

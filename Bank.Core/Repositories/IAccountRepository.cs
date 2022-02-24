@@ -10,7 +10,7 @@ namespace Bank.Core.Repositories
 {
     public interface IAccountRepository : IRepository<Account>
     {
-        Task<Account> FindAccountByOwnerIIN(string IIN);
-        Task<Account> FindAccountByAccountNumber(string accountNumber);
+        Account FindAccountByOwnerIIN(string IIN);
+        Account FindAccountByAccountNumber(string accountNumber);
     }
 }

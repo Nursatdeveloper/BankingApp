@@ -17,15 +17,15 @@ namespace Bank.Infrastructure.Repositories
         {
         }
 
-        public async Task<Account> FindAccountByAccountNumber(string accountNumber)
+        public Account FindAccountByAccountNumber(string accountNumber)
         {
-            var account = await _context.Accounts.FirstOrDefaultAsync(e => e.AccountNumber == accountNumber);
+            var account =  _context.Accounts.FirstOrDefault(e => e.AccountNumber == accountNumber);
             return account;
         }
 
-        public async Task<Account> FindAccountByOwnerIIN(string IIN)
+        public Account FindAccountByOwnerIIN(string IIN)
         {
-            var account = await _context.Accounts.FirstOrDefaultAsync(e => e.OwnerIIN == IIN);
+            var account =  _context.Accounts.FirstOrDefault(e => e.OwnerIIN == IIN);
             return account;
         }
     }
