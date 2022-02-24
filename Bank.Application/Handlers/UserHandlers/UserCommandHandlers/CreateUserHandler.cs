@@ -30,6 +30,7 @@ namespace Bank.Application.Handlers.UserCommandHandlers
             {
                 throw new ApplicationException("Issue with mapper UserMapper");
             }
+            userEntity.CardNumber = await _userServices.GenerateCardNumber();
             User newUser = await _userRepository.AddAsync(userEntity);
             UserResponse userResponse = UserMapper.Mapper.Map<UserResponse>(newUser);
             return userResponse;

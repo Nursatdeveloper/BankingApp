@@ -10,6 +10,7 @@ namespace Bank.Core.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        //Unique methods for UserRepo
+        Task<User> GetUserById(int id);
+        bool VerifyForUniqueness(string cardNumber);
     }
 }

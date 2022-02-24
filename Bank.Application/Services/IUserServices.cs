@@ -9,5 +9,6 @@ namespace Bank.Application.Services
 {
     public interface IUserServices
     {
+        Task<string> GenerateCardNumber();
     }
 }

@@ -2,6 +2,7 @@
 using Bank.Core.Repositories;
 using Bank.Infrastructure.Data;
 using Bank.Infrastructure.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace Bank.Infrastructure.Repositories
         public AccountRepository(ApplicationDbContext context) : base(context)
         {
         }
+
     }
 }

@@ -17,39 +17,20 @@ namespace Bank.Infrastructure.Repositories
         {
         }
 
-        /*private readonly UserContext _context;
-        public UserRepository(UserContext context)
+        public async Task<User> GetUserById(int id)
         {
-            _context = context;
-        }
-        public async Task<User> AddAsync(User entity)
-        {
-            await _context.Users.AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+            var user = await _context.Users.Include(e => e.Accounts).FirstAsync(e => e.UserId == id);
+            return user;
         }
 
-        public async Task DeleteAsync(User entity)
+        public bool VerifyForUniqueness(string cardNumber)
         {
-            _context.Users.Remove(entity);
-            await _context.SaveChangesAsync();
-
+            var user = _context.Users.FirstOrDefault(e => e.CardNumber == cardNumber);
+            if(user is null)
+            {
+                return true;
+            }
+            return false;
         }
-
-        public async Task<IReadOnlyList<User>> GetAllAsync()
-        {
-            return await _context.Users.ToListAsync();
-        }
-
-        public async Task<User> GetByIdAsync(int id)
-        {
-            return await _context.Users.FindAsync(id);
-        }
-
-        public async Task UpdateAsync(User entity)
-        {
-            _context.Users.Update(entity);
-            await _context.SaveChangesAsync();
-        }*/
     }
 }

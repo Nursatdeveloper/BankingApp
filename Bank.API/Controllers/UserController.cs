@@ -1,4 +1,5 @@
 ﻿using Bank.Application.Commands.UserCommands;
+using Bank.Application.Queries.AccountQueries;
 using Bank.Application.Queries.UserQueries;
 using Bank.Application.Responses;
 using Bank.Core.Entities;
@@ -45,7 +46,7 @@ namespace Bank.API.Controllers
         }
 
         [HttpDelete]
-        [Route("/delete/{id}")]
+        [Route("delete/{id}")]
         public async Task<JsonResult> DeleteUser(int id)
         {
             bool success = await _mediator.Send(new DeleteUserCommand(id));
@@ -55,5 +56,6 @@ namespace Bank.API.Controllers
             }
             return new JsonResult("Delete failed!");
         }
+
     }
 }
