@@ -23,20 +23,29 @@ namespace Bank.API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<User>> GetUsers()
+        [Route("get-all-users")]
+        public async Task<List<User>> GetAllUsers()
         {
             return await _mediator.Send(new GetAllUsersQuery());
         }
 
+        [HttpGet]
+        [Route("get-user-by-id/{id}")]
+        public async Task<User> GetUserById(int id)
+        {
+            return await _mediator.Send(new GetUserByIdQuery(id));
+        }
+
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [Route("create-user")]
         public async Task<ActionResult<UserResponse>> CreateUser([FromBody] CreateUserCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
-        [HttpDelete("/delete/{id}")]
+        [HttpDelete]
+        [Route("/delete/{id}")]
         public async Task<JsonResult> DeleteUser(int id)
         {
             bool success = await _mediator.Send(new DeleteUserCommand(id));
