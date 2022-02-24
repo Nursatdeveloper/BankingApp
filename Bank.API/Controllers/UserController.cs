@@ -54,7 +54,7 @@ namespace Bank.API.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{id}")]
+        [Route("delete/{id}")] //CANNOT DELETE BECAUSE NEED TO DELETE ACCOUNT TOO
         public async Task<JsonResult> DeleteUser(int id)
         {
             bool success = await _mediator.Send(new DeleteUserCommand(id));

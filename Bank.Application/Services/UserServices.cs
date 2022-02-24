@@ -22,7 +22,7 @@ namespace Bank.Application.Services
             string bankNumber = "00175";
             string individualIdentNumberForUser = "";
             Random random = new();
-            for(int i = 0; i < 12; i++)
+            for(int i = 0; i < 10; i++)
             {
                 int number = random.Next(10);
                 individualIdentNumberForUser += $"{number}";
