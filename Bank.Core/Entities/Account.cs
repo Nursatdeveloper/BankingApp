@@ -18,6 +18,6 @@ namespace Bank.Core.Entities
         public DateTime ActivatedDate { get; set; }
         public bool IsActive { get; set; }
         public bool IsBlocked { get; set; }
-        public List<BankOperation> BankOperations { get; set; }
+        public List<BankOperation> BankOperations { get; set; } = new List<BankOperation>();
     }
 }

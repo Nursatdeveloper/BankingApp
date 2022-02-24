@@ -1,6 +1,7 @@
 ﻿using Bank.Application.Commands.UserCommands;
 using Bank.Application.Mappers;
 using Bank.Application.Responses;
+using Bank.Application.Services;
 using Bank.Core.Entities;
 using Bank.Core.Repositories;
 using MediatR;
@@ -16,9 +17,11 @@ namespace Bank.Application.Handlers.UserCommandHandlers
     public class CreateUserHandler : IRequestHandler<CreateUserCommand, UserResponse>
     {
         private readonly IUserRepository _userRepository;
-        public CreateUserHandler(IUserRepository userRepository)
+        private readonly IUserServices _userServices;
+        public CreateUserHandler(IUserRepository userRepository, IUserServices userServices)
         {
             _userRepository = userRepository;
+            _userServices = userServices;
         }
         public async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {

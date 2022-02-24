@@ -1,4 +1,5 @@
 using Bank.Application.Handlers.UserCommandHandlers;
+using Bank.Application.Services;
 using Bank.Core.Repositories;
 using Bank.Core.Repositories.Base;
 using Bank.Infrastructure.Data;
@@ -48,6 +49,9 @@ namespace Bank.API
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IBankOperationRepository, BankOperationRepository>();
+
+            services.AddScoped<IAccountServices, AccountServices>();
+            services.AddScoped<IUserServices, UserServices>();
 
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(typeof(CreateUserHandler).GetTypeInfo().Assembly);
