@@ -10,5 +10,6 @@ namespace Bank.Core.Repositories
 {
     public interface IBankOperationRepository : IRepository<BankOperation>
     {
+        Task<List<BankOperation>> GetBankOperationsByUserId(int userId);
     }
 }

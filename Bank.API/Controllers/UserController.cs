@@ -19,11 +19,9 @@ namespace Bank.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IUserValidator _userValidator;
-        public UserController(IMediator mediator, IUserValidator userValidator)
+        public UserController(IMediator mediator)
         {
             _mediator = mediator;
-            _userValidator = userValidator;
         }
 
         [HttpPost]
@@ -65,6 +63,7 @@ namespace Bank.API.Controllers
         {
             return await _mediator.Send(new GetUserByIdQuery(id));
         }
+
 
     }
 }

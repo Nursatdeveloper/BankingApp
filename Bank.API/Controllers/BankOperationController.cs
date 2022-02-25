@@ -1,5 +1,7 @@
 ﻿using Bank.Application.Commands.BankOperationCommands;
+using Bank.Application.Queries.BankOperationQueries;
 using Bank.Application.Responses;
+using Bank.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +33,14 @@ namespace Bank.API.Controllers
                 return Ok(result);
             }
             return new JsonResult(result.Message);
+        }
+
+        [HttpGet]
+        [Route("get-bank-operations/{userId}")]
+        public async Task<List<BankOperation>> GetBankOperationsByUserId(int userId)
+        {
+            // May get null retult if no bank operations for this user
+            return await _mediator.Send(new GetBankOperationsByUserIdQuery(userId)); 
         }
     }
 }
