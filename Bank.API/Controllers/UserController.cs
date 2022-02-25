@@ -26,30 +26,16 @@ namespace Bank.API.Controllers
             _userValidator = userValidator;
         }
 
-        [HttpGet]
-        [Route("get-all-users")]
-        public async Task<List<User>> GetAllUsers()
-        {
-            return await _mediator.Send(new GetAllUsersQuery());
-        }
-
-        [HttpGet]
-        [Route("get-user-by-id/{id}")]
-        public async Task<User> GetUserById(int id)
-        {
-            return await _mediator.Send(new GetUserByIdQuery(id));
-        }
-
         [HttpPost]
         [Route("create-user")]
         public async Task<JsonResult> CreateUser([FromBody] CreateUserCommand command)
         {
-            if(_userValidator.ValidateIIN(command.IIN) && _userValidator.ValidatePhoteNumber(command.PhoneNumber))
+            var result = await _mediator.Send(command);
+            if(result is null)
             {
-                var result = await _mediator.Send(command);
-                return new JsonResult(result);
+                return new JsonResult("Пользователь с таким телефоном или ИИНом уже зарегистрирован в базе!");
             }
-            return new JsonResult("В базе уже существует!");
+            return new JsonResult(result);
 
         }
 
@@ -63,6 +49,21 @@ namespace Bank.API.Controllers
                 return new JsonResult("Deleted successfull!");
             }
             return new JsonResult("Delete failed!");
+        }
+
+
+        [HttpGet]
+        [Route("get-all-users")]
+        public async Task<List<User>> GetAllUsers()
+        {
+            return await _mediator.Send(new GetAllUsersQuery());
+        }
+
+        [HttpGet]
+        [Route("get-user-by-id/{id}")]
+        public async Task<User> GetUserById(int id)
+        {
+            return await _mediator.Send(new GetUserByIdQuery(id));
         }
 
     }

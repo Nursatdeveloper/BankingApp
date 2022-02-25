@@ -1,4 +1,5 @@
-﻿using Bank.Core.Repositories;
+﻿using Bank.Core.Entities;
+using Bank.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -28,16 +28,20 @@ namespace Bank.Application.Handlers.UserCommandHandlers
         }
         public async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            User userEntity = UserMapper.Mapper.Map<User>(request);
-            if(userEntity is null)
+            if(_userValidator.ValidateIIN(request.IIN) && _userValidator.ValidatePhoneNumber(request.PhoneNumber))
             {
-                throw new ApplicationException("Issue with mapper UserMapper");
+                User userEntity = UserMapper.Mapper.Map<User>(request);
+                if (userEntity is null)
+                {
+                    throw new ApplicationException("Issue with mapper UserMapper");
+                }
+                userEntity.CardNumber = await _userServices.GenerateCardNumber();
+
+                User newUser = await _userRepository.AddAsync(userEntity);
+                UserResponse userResponse = UserMapper.Mapper.Map<UserResponse>(newUser);
+                return userResponse;
             }
-            userEntity.CardNumber = await _userServices.GenerateCardNumber();
-            
-            User newUser = await _userRepository.AddAsync(userEntity);
-            UserResponse userResponse = UserMapper.Mapper.Map<UserResponse>(newUser);
-            return userResponse;
+            return null;
         }
     }
 }

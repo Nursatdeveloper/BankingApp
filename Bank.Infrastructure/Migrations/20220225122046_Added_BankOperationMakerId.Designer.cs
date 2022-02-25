@@ -3,15 +3,17 @@ using System;
 using Bank.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Bank.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220225122046_Added_BankOperationMakerId")]
+    partial class Added_BankOperationMakerId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,9 +79,6 @@ namespace Bank.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("BankOperationMakerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("BankOperationMoneyAmount")
                         .HasColumnType("integer");
 
                     b.Property<string>("BankOperationParticipant")

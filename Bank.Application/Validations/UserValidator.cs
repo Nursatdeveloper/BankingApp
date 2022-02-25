@@ -32,7 +32,7 @@ namespace Bank.Application.Validations
             return false;
         }
 
-        public bool ValidatePhoteNumber(string phoneNumber)
+        public bool ValidatePhoneNumber(string phoneNumber)
         {
             if(_userRepository.FindUserByPhoneNumber(phoneNumber) is null)
             {

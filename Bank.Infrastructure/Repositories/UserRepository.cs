@@ -19,19 +19,19 @@ namespace Bank.Infrastructure.Repositories
 
         public User FindUserByCardNumber(string cardNumber)
         {
-            var user = _context.Users.FirstOrDefault(e => e.CardNumber == cardNumber);
+            var user = _context.Users.Include(e => e.Accounts).FirstOrDefault(e => e.CardNumber == cardNumber);
             return user;
         }
 
         public User FindUserByIIN(string IIN)
         {
-            var user =  _context.Users.FirstOrDefault(e => e.IIN == IIN);
+            var user =  _context.Users.Include(e => e.Accounts).FirstOrDefault(e => e.IIN == IIN);
             return user;
         }
 
         public User FindUserByPhoneNumber(string phoneNumber)
         {
-            var user = _context.Users.FirstOrDefault(e => e.PhoneNumber == phoneNumber);
+            var user = _context.Users.Include(e => e.Accounts).FirstOrDefault(e => e.PhoneNumber == phoneNumber);
             return user;
         }
 

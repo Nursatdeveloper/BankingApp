@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bank.Core.Entities
+namespace Bank.Application.Responses
 {
-    public class BankOperation
+    public class BankOperationResponse
     {
         public int BankOperationId { get; set; }
         public string BankOperationType { get; set; }
@@ -15,5 +15,7 @@ namespace Bank.Core.Entities
         public DateTime BankOperationTime { get; set; }
         public int BankOperationMoneyAmount { get; set; }
         public int BankOperationMakerId { get; set; }
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
     }
 }
