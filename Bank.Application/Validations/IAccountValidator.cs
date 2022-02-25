@@ -11,5 +11,6 @@ namespace Bank.Application.Validations
     {
         bool ValidateIIN(string IIN);
         bool ValidateAccountNumber(string accountNumber);
+        bool AccountIsNotActiveOrBlocked(Account account);
     }
 }

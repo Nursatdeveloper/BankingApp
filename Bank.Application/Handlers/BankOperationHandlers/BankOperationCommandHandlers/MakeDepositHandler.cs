@@ -1,6 +1,7 @@
 ﻿using Bank.Application.Commands.BankOperationCommands;
 using Bank.Application.Mappers;
 using Bank.Application.Responses;
+using Bank.Application.Validations;
 using Bank.Core.Entities;
 using Bank.Core.Repositories;
 using MediatR;
@@ -17,10 +18,14 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
     {
         private readonly IUserRepository _userRepository;
         private readonly IAccountRepository _accountRepository;
-        public MakeDepositHandler(IUserRepository userRepository, IAccountRepository accountRepository)
+        private readonly IAccountValidator _accountValidator;
+
+        public MakeDepositHandler(IUserRepository userRepository, IAccountRepository accountRepository, IAccountValidator accountValidator)
         {
             _userRepository = userRepository;
             _accountRepository = accountRepository;
+            _accountValidator = accountValidator;
+
         }
         public async Task<BankOperationResponse> Handle(MakeDepositCommand request, CancellationToken cancellationToken)
         {
@@ -39,7 +44,7 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
             if(user is null) { user = userByCardNumber; }
 
             Account account = user.Accounts.FirstOrDefault(e => e.AccountType == request.DepositAccountType);
-            if (account.IsActive == false || account.IsBlocked == true)
+            if (_accountValidator.AccountIsNotActiveOrBlocked(account))
             {
                 BankOperationResponse accountIsNotAccessibleResponse = new()
                 {

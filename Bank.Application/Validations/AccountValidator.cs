@@ -17,6 +17,16 @@ namespace Bank.Application.Validations
             _accountRepository = accountRepository;
             _userRepository = userRepository;
         }
+
+        public bool AccountIsNotActiveOrBlocked(Account account)
+        {
+            if (account.IsActive == false || account.IsBlocked == true)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public bool ValidateAccountNumber(string accountNumber)
         {
             if(_accountRepository.FindAccountByAccountNumber(accountNumber) is null)
