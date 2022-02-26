@@ -50,7 +50,7 @@ namespace Bank.Application.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, $"{user.FirstName} {user.LastName}"),
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Role)
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
             };
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             return claimsIdentity;

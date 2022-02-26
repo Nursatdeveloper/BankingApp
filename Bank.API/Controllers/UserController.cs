@@ -6,6 +6,7 @@ using Bank.Application.Validations;
 using Bank.Core.Entities;
 using Bank.Core.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -72,10 +73,12 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-user-by-id/{id}")]
+        
         public async Task<User> GetUserById(int id)
         {
             return await _mediator.Send(new GetUserByIdQuery(id));
         }
+
 
 
     }
