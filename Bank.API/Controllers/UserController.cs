@@ -39,8 +39,17 @@ namespace Bank.API.Controllers
         }
 
         [HttpPost]
+        [Route("change-user-role")]
+        //[Authorize(Roles = "Администратор")]
+        public async Task<JsonResult> ChangeRole([FromBody] ChangeUserRoleCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
         [Route("create-user")]
-        public async Task<ActionResult<JsonResult>> CreateUser([FromBody] CreateUserCommand command)
+        public async Task<ActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
             var result = await _mediator.Send(command);
             if(result.IsSuccess)
