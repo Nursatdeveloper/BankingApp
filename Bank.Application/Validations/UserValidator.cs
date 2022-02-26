@@ -1,4 +1,6 @@
-﻿using Bank.Core.Repositories;
+﻿using Bank.Application.Commands.UserCommands;
+using Bank.Core.Entities;
+using Bank.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,15 @@ namespace Bank.Application.Validations
                 return true;
             }
             return false;
+        }
+
+        public User ValidateLogin(LoginUserCommand request)
+        {
+            if(request.Telephone == null)
+            {
+                return _userRepository.FindUserByIIN(request.IIN);
+            }
+            return _userRepository.FindUserByPhoneNumber(request.Telephone);
         }
 
         public bool ValidatePhoneNumber(string phoneNumber)

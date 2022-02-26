@@ -1,8 +1,6 @@
-﻿using Bank.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Bank.Application.Commands.UserCommands;
+using Bank.Core.Entities;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Bank.Application.Services
@@ -10,5 +8,7 @@ namespace Bank.Application.Services
     public interface IUserServices
     {
         Task<string> GenerateCardNumber();
+        User FindUserForLogin(LoginUserCommand request);
+        ClaimsIdentity GenerateClaimsIdentity(User user);
     }
 }

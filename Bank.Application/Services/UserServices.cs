@@ -1,9 +1,11 @@
-﻿using Bank.Application.Validations;
+﻿using Bank.Application.Commands.UserCommands;
+using Bank.Application.Validations;
 using Bank.Core.Entities;
 using Bank.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +18,13 @@ namespace Bank.Application.Services
         {
             _userValidator = userValidator;
         }
+
+        public User FindUserForLogin(LoginUserCommand request)
+        {
+            User user = _userValidator.ValidateLogin(request);
+            return user;
+        }
+
         public async Task<string> GenerateCardNumber()
         {
             string visa = "4";
@@ -34,6 +43,17 @@ namespace Bank.Application.Services
                 await GenerateCardNumber();
             }
             return cardNumber;
+        }
+
+        public ClaimsIdentity GenerateClaimsIdentity(User user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, $"{user.FirstName} {user.LastName}"),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Role)
+            };
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            return claimsIdentity;
         }
     }
 }

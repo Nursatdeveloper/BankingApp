@@ -4,6 +4,7 @@ using Bank.Application.Queries.UserQueries;
 using Bank.Application.Responses;
 using Bank.Application.Validations;
 using Bank.Core.Entities;
+using Bank.Core.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,13 +26,25 @@ namespace Bank.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-user")]
-        public async Task<JsonResult> CreateUser([FromBody] CreateUserCommand command)
+        [Route("login")]
+        public async Task<ActionResult<UserResponse>> Login([FromBody] LoginUserCommand command)
         {
             var result = await _mediator.Send(command);
-            if(result is null)
+            if (result.IsSuccess)
             {
-                return new JsonResult("Пользователь с таким телефоном или ИИНом уже зарегистрирован в базе!");
+                return Ok(result);
+            }
+            return new JsonResult(result.Message);
+        }
+
+        [HttpPost]
+        [Route("create-user")]
+        public async Task<ActionResult<JsonResult>> CreateUser([FromBody] CreateUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if(result.IsSuccess)
+            {
+                return Ok(result);
             }
             return new JsonResult(result);
 

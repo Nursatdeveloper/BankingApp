@@ -28,7 +28,7 @@ namespace Bank.Application.Handlers.UserCommandHandlers
         }
         public async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            if(_userValidator.ValidateIIN(request.IIN) && _userValidator.ValidatePhoneNumber(request.PhoneNumber))
+            if (_userValidator.ValidateIIN(request.IIN) && _userValidator.ValidatePhoneNumber(request.PhoneNumber))
             {
                 User userEntity = UserMapper.Mapper.Map<User>(request);
                 if (userEntity is null)
@@ -39,9 +39,16 @@ namespace Bank.Application.Handlers.UserCommandHandlers
 
                 User newUser = await _userRepository.AddAsync(userEntity);
                 UserResponse userResponse = UserMapper.Mapper.Map<UserResponse>(newUser);
+                userResponse.IsSuccess = true;
+                userResponse.Message = "Пользователь успешно зарегистрирован!";
                 return userResponse;
             }
-            return null;
+            UserResponse userAlreadyExistsResponse = new()
+            {
+                IsSuccess = false,
+                Message = "Пользователь с таким телефоном или ИИНом уже зарегистрирован в базе!"
+            };
+            return userAlreadyExistsResponse;
         }
     }
 }
