@@ -53,6 +53,7 @@ namespace Bank.API.Controllers
 
         [HttpDelete]
         [Route("delete/{id}")]
+        [Authorize(Roles = "Администратор")]
         public async Task<JsonResult> DeleteUser(int id)
         {
             bool success = await _mediator.Send(new DeleteUserCommand(id));
@@ -66,6 +67,7 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-all-users")]
+        [Authorize(Roles = "Администратор, Сотрудник")]
         public async Task<List<User>> GetAllUsers()
         {
             return await _mediator.Send(new GetAllUsersQuery());
@@ -73,7 +75,7 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-user-by-id/{id}")]
-        
+        [Authorize(Roles = "Пользователь")]
         public async Task<User> GetUserById(int id)
         {
             return await _mediator.Send(new GetUserByIdQuery(id));

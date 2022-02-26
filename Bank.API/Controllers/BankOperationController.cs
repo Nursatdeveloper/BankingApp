@@ -3,6 +3,7 @@ using Bank.Application.Queries.BankOperationQueries;
 using Bank.Application.Responses;
 using Bank.Core.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,6 +25,7 @@ namespace Bank.API.Controllers
 
         [HttpPost]
         [Route("make-deposit")]
+        [Authorize(Roles = "Пользователь")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<BankOperationResponse>> MakeDeposit([FromBody] MakeDepositCommand command)
         {
@@ -37,6 +39,7 @@ namespace Bank.API.Controllers
 
         [HttpPost]
         [Route("make-transfer")]
+        [Authorize(Roles = "Пользователь")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<BankOperationResponse>> MakeTransfer([FromBody] MakeTransferCommand command)
         {
@@ -50,6 +53,7 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-bank-operations/{userId}")]
+        [Authorize(Roles = "Пользователь")]
         public async Task<List<BankOperation>> GetBankOperationsByUserId(int userId)
         {
             // May get null retult if no bank operations for this user

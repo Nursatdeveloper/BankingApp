@@ -2,6 +2,7 @@
 using Bank.Application.Queries.AccountQueries;
 using Bank.Core.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,6 +25,7 @@ namespace Bank.API.Controllers
 
         [HttpPost]
         [Route("activate")]
+        [Authorize(Roles = "Пользователь")]
         public async Task<JsonResult> ActivateBankAccount([FromBody] ActivateAccountCommand command)
         {
             var result = await _mediator.Send(command);
@@ -32,6 +34,7 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-accounts/{id}")]
+        [Authorize(Roles = "Пользователь")]
         public async Task<List<Account>> GetAccountsByUserId(int id)
         {
             var accounts = await _mediator.Send(new GetAccountsByUserIdQuery(id));
