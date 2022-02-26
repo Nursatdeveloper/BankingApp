@@ -36,11 +36,12 @@ namespace Bank.Application.Validations
 
         public User ValidateLogin(LoginUserCommand request)
         {
-            if(request.Telephone == null)
+            User user = _userRepository.FindUserByPhoneNumber(request.Telephone);
+            if(user is null)
             {
                 return _userRepository.FindUserByIIN(request.IIN);
             }
-            return _userRepository.FindUserByPhoneNumber(request.Telephone);
+            return user;
         }
 
         public bool ValidatePhoneNumber(string phoneNumber)
