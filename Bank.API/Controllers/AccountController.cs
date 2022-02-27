@@ -77,5 +77,14 @@ namespace Bank.API.Controllers
             return accounts;
 
         }
+
+        [HttpGet]
+        [Route("get-all-accounts")]
+        //[Authorize(Roles = "Администратор")]
+        public async Task<IReadOnlyList<Account>> GetAllAccounts()
+        {
+            var accounts = await _mediator.Send(new GetAllAccountsQuery());
+            return accounts;
+        }
     }
 }
