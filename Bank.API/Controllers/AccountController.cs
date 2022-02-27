@@ -22,11 +22,20 @@ namespace Bank.API.Controllers
             _mediator = mediator;
         }
 
+        //For testing purpose I removed Authorization attribute
+        [HttpPost]
+        [Route("create-account")]
+        //[Authorize(Roles = "Пользователь")]
+        public async Task<JsonResult> CreateBankAccount([FromBody] CreateAccountCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return new JsonResult(result);
+        }
 
         [HttpPost]
-        [Route("activate")]
-        [Authorize(Roles = "Пользователь")]
-        public async Task<JsonResult> ActivateBankAccount([FromBody] ActivateAccountCommand command)
+        [Route("deactivate-account")]
+        //[Authorize(Roles = "Пользователь")]
+        public async Task<JsonResult> DeactivateBankAccount([FromBody] DeactivateAccountCommand command)
         {
             var result = await _mediator.Send(command);
             return new JsonResult(result);
@@ -34,7 +43,7 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-accounts/{id}")]
-        [Authorize(Roles = "Пользователь")]
+        //[Authorize(Roles = "Пользователь")]
         public async Task<List<Account>> GetAccountsByUserId(int id)
         {
             var accounts = await _mediator.Send(new GetAccountsByUserIdQuery(id));

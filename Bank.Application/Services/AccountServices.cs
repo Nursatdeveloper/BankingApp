@@ -15,7 +15,7 @@ namespace Bank.Application.Services
         {
             _accountValidator = accountValidator;
         }
-        public Account ActivateAccountFor(User user, string accountType)
+        public Account CreateAccountFor(User user, string accountType)
         {
             Account account = new();
             account.AccountNumber = GenerateAccountNumber(accountType);

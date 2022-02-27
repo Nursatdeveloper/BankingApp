@@ -12,28 +12,28 @@ using System.Threading.Tasks;
 
 namespace Bank.Application.Handlers.AccountHandlers.AccountCommandHandlers
 {
-    public class ActivateAccountHandler : IRequestHandler<ActivateAccountCommand, string>
+    public class CreateAccountHandler : IRequestHandler<CreateAccountCommand, string>
     {
         private readonly IUserRepository _userRepository;
         private readonly IAccountServices _accountServices;
-        public ActivateAccountHandler(IUserRepository userRepository, IAccountServices accountServices)
+        public CreateAccountHandler(IUserRepository userRepository, IAccountServices accountServices)
         {
             _userRepository = userRepository;
             _accountServices = accountServices;
         }
-        public async Task<string> Handle(ActivateAccountCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
             User user = await _userRepository.GetByIdAsync(request.UserId);
-            Account activatedAccount = _accountServices.ActivateAccountFor(user, request.AccountType);
-            user.Accounts.Add(activatedAccount);
+            Account createdAccount = _accountServices.CreateAccountFor(user, request.AccountType);
+            user.Accounts.Add(createdAccount);
             try
             {
                 await _userRepository.UpdateAsync(user);
-                return "Account was activated";
+                return "Account was created";
             }
             catch
             {
-                return "Account was not activated!";
+                return "Account was not created!";
             }  
         }
     }

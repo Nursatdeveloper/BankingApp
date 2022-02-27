@@ -21,9 +21,11 @@ namespace Bank.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public UserController(IMediator mediator)
+        private readonly IUserRepository _userRepository;
+        public UserController(IMediator mediator, IUserRepository userRepository)
         {
             _mediator = mediator;
+            _userRepository = userRepository; //NEED TO REMOVE LATER 
         }
 
         [HttpPost]
@@ -40,7 +42,7 @@ namespace Bank.API.Controllers
 
         [HttpPost]
         [Route("change-user-role")]
-        //[Authorize(Roles = "Администратор")]
+        [Authorize(Roles = "Администратор")]
         public async Task<JsonResult> ChangeRole([FromBody] ChangeUserRoleCommand command)
         {
             var result = await _mediator.Send(command);
