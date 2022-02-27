@@ -30,6 +30,10 @@ namespace Bank.Application.Handlers.AccountHandlers.AccountCommandHandlers
             if(BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
                 Account account = user.Accounts.FirstOrDefault(e => e.AccountType == request.AccountType);
+                if(account.IsBlocked)
+                {
+                    return $"Ваш {account.AccountType} был заблокирован. Поэтому {account.AccountType} уже деактивирован!";
+                }
                 account.IsActive = false;
                 await _accountRepository.UpdateAsync(account);
                 return $"Ваш {account.AccountType} был деактивирован!";

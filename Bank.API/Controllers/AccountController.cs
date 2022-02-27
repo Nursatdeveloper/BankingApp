@@ -50,6 +50,24 @@ namespace Bank.API.Controllers
             return new JsonResult(result);
         }
 
+        [HttpPost]
+        [Route("block-account")]
+        //[Authorize(Roles = "Администратор")]
+        public async Task<JsonResult> BlockBankAccount([FromBody] BlockAccountCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
+        [Route("unblock-account")]
+        //[Authorize(Roles = "Администратор")]
+        public async Task<JsonResult> UnblockBankAccount([FromBody] UnBlockAccountCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return new JsonResult(result);
+        }
+
         [HttpGet]
         [Route("get-accounts/{id}")]
         //[Authorize(Roles = "Пользователь")]
