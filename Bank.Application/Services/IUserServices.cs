@@ -10,5 +10,6 @@ namespace Bank.Application.Services
         Task<string> GenerateCardNumber();
         User FindUserForLogin(LoginUserCommand request);
         ClaimsIdentity GenerateClaimsIdentity(User user);
+        Task<string> Notify(string IIN, string notificationText);
     }
 }

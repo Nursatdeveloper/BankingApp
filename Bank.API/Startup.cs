@@ -61,6 +61,7 @@ namespace Bank.API
 
             services.AddScoped<IAccountServices, AccountServices>();
             services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IAccountValidator, AccountValidator>();
             services.AddScoped<IUserValidator, UserValidator>();
 

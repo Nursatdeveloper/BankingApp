@@ -1,4 +1,5 @@
 ﻿using Bank.Application.Commands.AccountCommands;
+using Bank.Application.Services;
 using Bank.Core.Entities;
 using Bank.Core.Repositories;
 using MediatR;
@@ -15,10 +16,12 @@ namespace Bank.Application.Handlers.AccountHandlers.AccountCommandHandlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IAccountRepository _accountRepository;
-        public ActivateAccountHandler(IUserRepository userRepository, IAccountRepository accountRepository)
+        private readonly IUserServices _userServices;
+        public ActivateAccountHandler(IUserRepository userRepository, IAccountRepository accountRepository, IUserServices userServices)
         {
             _userRepository = userRepository;
             _accountRepository = accountRepository;
+            _userServices = userServices;
         }
         public async Task<string> Handle(ActivateAccountCommand request, CancellationToken cancellationToken)
         {
@@ -35,8 +38,11 @@ namespace Bank.Application.Handlers.AccountHandlers.AccountCommandHandlers
                     return $"Ваш {request.AccountType} был заблокирован! Невозможно активировать!";
                 }
                 account.IsActive = true;
+                
+                string message = await _userServices.Notify(user.IIN, $"Вы активировали {account.AccountType}!");
                 await _accountRepository.UpdateAsync(account);
-                return $"Ваш {request.AccountType} был активирован!";
+
+                return message;
             }
             return "Неправильный пароль!";
         }

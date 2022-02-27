@@ -14,9 +14,13 @@ namespace Bank.Application.Services
     public class UserServices : IUserServices
     {
         private readonly IUserValidator _userValidator;
-        public UserServices(IUserValidator userValidator)
+        private readonly IUserRepository _userRepository;
+        private readonly INotificationService _notificationService;
+        public UserServices(IUserValidator userValidator, IUserRepository userRepository, INotificationService notificationService)
         {
             _userValidator = userValidator;
+            _userRepository = userRepository;
+            _notificationService = notificationService;
         }
 
         public User FindUserForLogin(LoginUserCommand request)
@@ -54,6 +58,15 @@ namespace Bank.Application.Services
             };
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             return claimsIdentity;
+        }
+
+        public async Task<string> Notify(string iin, string notificationText)
+        {
+            User user = _userRepository.FindUserByIIN(iin);
+            Notification notification = _notificationService.GenerateNotification(notificationText, user.UserId);
+            user.Notifications.Add(notification);
+            await _userRepository.UpdateAsync(user);
+            return notificationText;
         }
     }
 }
