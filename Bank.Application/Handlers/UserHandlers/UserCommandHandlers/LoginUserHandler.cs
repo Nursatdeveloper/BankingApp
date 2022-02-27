@@ -36,7 +36,7 @@ namespace Bank.Application.Handlers.UserHandlers.UserCommandHandlers
                 return userNotFoundResponse;
             }
 
-            if(user.Password == request.Password)
+            if(BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
                 var now = DateTime.UtcNow;
                 var claimsIdentity = _userServices.GenerateClaimsIdentity(user);

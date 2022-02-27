@@ -37,6 +37,7 @@ namespace Bank.Application.Handlers.UserCommandHandlers
                 }
                 userEntity.CardNumber = await _userServices.GenerateCardNumber();
                 userEntity.Role = "Пользователь";
+                userEntity.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
                 User newUser = await _userRepository.AddAsync(userEntity);
                 UserResponse userResponse = UserMapper.Mapper.Map<UserResponse>(newUser);
                 userResponse.IsSuccess = true;
