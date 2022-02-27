@@ -17,5 +17,6 @@ namespace Bank.Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<BankOperation> BankOperations { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }
