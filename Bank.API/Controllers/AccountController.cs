@@ -33,6 +33,15 @@ namespace Bank.API.Controllers
         }
 
         [HttpPost]
+        [Route("activate-account")]
+        //[Authorize(Roles = "Пользователь")]
+        public async Task<JsonResult> ActivateBankAccount([FromBody] ActivateAccountCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
         [Route("deactivate-account")]
         //[Authorize(Roles = "Пользователь")]
         public async Task<JsonResult> DeactivateBankAccount([FromBody] DeactivateAccountCommand command)
