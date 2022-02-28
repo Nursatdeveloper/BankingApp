@@ -51,6 +51,20 @@ namespace Bank.API.Controllers
             return new JsonResult(result.Message);
         }
 
+        [HttpPost]
+        [Route("make-transfer-myaccount")]
+        //[Authorize(Roles = "Пользователь")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<BankOperationResponse>> MakeTransferToMyAccount([FromBody] MakeTransferToMyAccountCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if(result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return new JsonResult(result.Message);
+        }
+
         [HttpGet]
         [Route("get-bank-operations/{userId}")]
         [Authorize(Roles = "Пользователь")]
