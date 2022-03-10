@@ -92,7 +92,20 @@ namespace Bank.API.Controllers
             return await _mediator.Send(new GetUserByIdQuery(id));
         }
 
+        [HttpGet]
+        [Route("get-notifications-by-userid/{id}")]
+        [Authorize(Roles = "Пользователь")]
+        public async Task<List<Notification>> GetNotificationsByUserId(int id)
+        {
+            return await _mediator.Send(new GetNotificationsByUserIdQuery(id));
+        }
 
+        [HttpGet]
+        [Route("get-user-by-telephone/{telephone}")]
+        public async Task<UserResponse> GetUserByTelephone(string telephone)
+        {
+            return await _mediator.Send(new GetUserByTelephoneQuery(telephone));
+        }
 
     }
 }

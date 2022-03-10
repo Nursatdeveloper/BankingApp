@@ -17,6 +17,6 @@ namespace Bank.Application.Commands.BankOperationCommands
         public string TransferMakerTelephone { get; set; } // or this
         public string TransferToAccountType { get; set; } // by user
         public string ReceiverCardNumber { get; set; } 
-        public string RecerverTelephone { get; set; }
+        public string ReceiverTelephone { get; set; } // 
     }
 }

@@ -14,6 +14,8 @@ namespace Bank.Core.Entities
         public string BankOperationParticipant { get; set; }
         public DateTime BankOperationTime { get; set; }
         public int BankOperationMoneyAmount { get; set; }
+        public string FromAccount { get; set; }
+        public string ToAccount { get; set; }
         public int BankOperationMakerId { get; set; }
     }
 }

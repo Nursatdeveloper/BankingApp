@@ -29,7 +29,7 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
         {
             User fromUserByPhoneNumber = _userRepository.FindUserByPhoneNumber(request.TransferMakerTelephone);
             User fromUserByCardNumber = _userRepository.FindUserByCardNumber(request.TransferMakerCardNumber);
-            User toUserByPhoneNumber = _userRepository.FindUserByPhoneNumber(request.RecerverTelephone);
+            User toUserByPhoneNumber = _userRepository.FindUserByPhoneNumber(request.ReceiverTelephone);
             User toUserByCardNumber = _userRepository.FindUserByCardNumber(request.ReceiverCardNumber);
             if (toUserByPhoneNumber is null && toUserByCardNumber is null)
             {
@@ -87,7 +87,9 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
                 BankOperationParticipant = toAccount.OwnerName,
                 BankOperationTime = DateTime.Now,
                 BankOperationMakerId = fromUser.UserId,
-                BankOperationMoneyAmount = request.TransferAmount
+                BankOperationMoneyAmount = request.TransferAmount,
+                FromAccount = fromAccount.AccountType,
+                ToAccount = toAccount.AccountType
             };
             fromAccount.BankOperations.Add(bankOperationForMaker);
 
@@ -98,7 +100,9 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
                 BankOperationParticipant = toAccount.OwnerName,
                 BankOperationTime = DateTime.Now,
                 BankOperationMakerId = toUser.UserId,
-                BankOperationMoneyAmount = request.TransferAmount
+                BankOperationMoneyAmount = request.TransferAmount,
+                FromAccount = fromAccount.AccountType,
+                ToAccount = toAccount.AccountType
             };
             toAccount.BankOperations.Add(bankOperationForReceiver);
 

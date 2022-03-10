@@ -19,6 +19,7 @@ namespace Bank.Application.Responses
         public string PhoneNumber { get; set; }
         public string Role { get; set; }
         public List<Account> Accounts { get; set; }
+        public List<Notification> Notifications { get; set; }
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
     }

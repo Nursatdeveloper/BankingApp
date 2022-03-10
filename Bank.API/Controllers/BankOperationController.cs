@@ -4,6 +4,7 @@ using Bank.Application.Responses;
 using Bank.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Bank.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class BankOperationController : ControllerBase
     {
@@ -53,7 +54,7 @@ namespace Bank.API.Controllers
 
         [HttpPost]
         [Route("make-transfer-myaccount")]
-        //[Authorize(Roles = "Пользователь")]
+        [Authorize(Roles = "Пользователь")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<BankOperationResponse>> MakeTransferToMyAccount([FromBody] MakeTransferToMyAccountCommand command)
         {
