@@ -89,7 +89,8 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
                 BankOperationMakerId = fromUser.UserId,
                 BankOperationMoneyAmount = request.TransferAmount,
                 FromAccount = fromAccount.AccountType,
-                ToAccount = toAccount.AccountType
+                ToAccount = toAccount.AccountType,
+                CurrencyType = request.CurrencyType
             };
             fromAccount.BankOperations.Add(bankOperationForMaker);
 
@@ -102,7 +103,8 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
                 BankOperationMakerId = toUser.UserId,
                 BankOperationMoneyAmount = request.TransferAmount,
                 FromAccount = fromAccount.AccountType,
-                ToAccount = toAccount.AccountType
+                ToAccount = toAccount.AccountType,
+                CurrencyType = request.CurrencyType
             };
             toAccount.BankOperations.Add(bankOperationForReceiver);
 

@@ -58,6 +58,7 @@ namespace Bank.API
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IBankOperationRepository, BankOperationRepository>();
+            services.AddTransient<INotificationRepository, NotificationRepository>();
 
             services.AddScoped<IAccountServices, AccountServices>();
             services.AddScoped<IUserServices, UserServices>();

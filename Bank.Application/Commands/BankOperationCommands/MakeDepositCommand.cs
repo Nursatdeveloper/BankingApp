@@ -15,5 +15,6 @@ namespace Bank.Application.Commands.BankOperationCommands
         public string DepositAccountType { get; set; }
         public string DepositMakerCardNumber { get; set; }
         public string DepositMakerTelephone { get; set; }
+        public string CurrencyType { get; set; }
     }
 }

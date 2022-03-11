@@ -12,6 +12,7 @@ namespace Bank.Application.Commands.BankOperationCommands
     {
         public string TransferMaker { get; set; } 
         public int TransferAmount { get; set; } // by user
+        public string CurrencyType { get; set; }
         public string TransferFromAccountType { get; set; } // by user
         public string TransferMakerCardNumber { get; set; } // choose one this
         public string TransferMakerTelephone { get; set; } // or this

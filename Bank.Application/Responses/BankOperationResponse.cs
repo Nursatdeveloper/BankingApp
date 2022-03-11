@@ -14,6 +14,7 @@ namespace Bank.Application.Responses
         public string BankOperationParticipant { get; set; }
         public DateTime BankOperationTime { get; set; }
         public int BankOperationMoneyAmount { get; set; }
+        public string CurrencyType { get; set; }
         public int BankOperationMakerId { get; set; }
         public bool IsSuccess { get; set; }
         public string Message { get; set; }

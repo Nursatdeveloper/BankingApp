@@ -16,6 +16,7 @@ namespace Bank.Core.Entities
         public int BankOperationMoneyAmount { get; set; }
         public string FromAccount { get; set; }
         public string ToAccount { get; set; }
+        public string CurrencyType { get; set; }
         public int BankOperationMakerId { get; set; }
     }
 }

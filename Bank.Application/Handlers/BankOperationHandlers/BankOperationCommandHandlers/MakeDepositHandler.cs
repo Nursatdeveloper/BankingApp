@@ -62,7 +62,8 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
                 BankOperationParticipant = "None",
                 BankOperationTime = DateTime.Now,
                 BankOperationMakerId = user.UserId,
-                BankOperationMoneyAmount = request.DepositAmount
+                BankOperationMoneyAmount = request.DepositAmount,
+                CurrencyType = request.CurrencyType
             };
             account.BankOperations.Add(bankOperation);
             await _accountRepository.UpdateAsync(account);

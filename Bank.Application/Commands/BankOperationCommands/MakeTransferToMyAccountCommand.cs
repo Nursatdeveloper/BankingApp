@@ -14,5 +14,7 @@ namespace Bank.Application.Commands.BankOperationCommands
         public string FromAccount { get; set; }
         public string ToAccount { get; set; }
         public int TransferAmount { get; set; }
+        public string CurrencyType { get; set; }
+
     }
 }

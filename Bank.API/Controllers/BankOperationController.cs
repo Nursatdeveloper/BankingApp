@@ -2,6 +2,7 @@
 using Bank.Application.Queries.BankOperationQueries;
 using Bank.Application.Responses;
 using Bank.Core.Entities;
+using Bank.Core.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -74,5 +75,6 @@ namespace Bank.API.Controllers
             // May get null retult if no bank operations for this user
             return await _mediator.Send(new GetBankOperationsByUserIdQuery(userId)); 
         }
+
     }
 }

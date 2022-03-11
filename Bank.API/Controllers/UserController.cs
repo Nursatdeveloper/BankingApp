@@ -16,16 +16,14 @@ using System.Threading.Tasks;
 
 namespace Bank.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IUserRepository _userRepository;
-        public UserController(IMediator mediator, IUserRepository userRepository)
+        public UserController(IMediator mediator)
         {
             _mediator = mediator;
-            _userRepository = userRepository; //NEED TO REMOVE LATER 
         }
 
         [HttpPost]
@@ -106,6 +104,19 @@ namespace Bank.API.Controllers
         {
             return await _mediator.Send(new GetUserByTelephoneQuery(telephone));
         }
+
+        [HttpPost]
+        [Route("change-notification-status")]
+        public async Task<JsonResult> ChangeNotificationStatus([FromBody] ChangeUserNotificationStatusCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if(result == true)
+            {
+                return new JsonResult("true");
+            }
+            return new JsonResult("false");
+        }
+
 
     }
 }

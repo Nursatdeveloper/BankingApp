@@ -2,6 +2,7 @@
 using Bank.Core.Repositories;
 using Bank.Infrastructure.Data;
 using Bank.Infrastructure.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,11 @@ namespace Bank.Infrastructure.Repositories
     {
         public NotificationRepository(ApplicationDbContext context) : base(context)
         {
+        }
 
+        public async Task<Notification> GetNotificationByUserId(int userId)
+        {
+            return await _context.Notifications.FirstOrDefaultAsync(e => e.UserId == userId && e.IsSeen == false);
         }
     }
 }

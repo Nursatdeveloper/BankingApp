@@ -10,5 +10,6 @@ namespace Bank.Core.Repositories
 {
     public interface INotificationRepository : IRepository<Notification> 
     {
+        Task<Notification> GetNotificationByUserId(int userId);
     }
 }

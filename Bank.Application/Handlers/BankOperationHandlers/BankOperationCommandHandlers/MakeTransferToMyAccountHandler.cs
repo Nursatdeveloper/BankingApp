@@ -63,7 +63,10 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
                 BankOperationParticipant = fromAccount.AccountType,
                 BankOperationTime = DateTime.Now,
                 BankOperationMakerId = user.UserId,
-                BankOperationMoneyAmount = request.TransferAmount
+                BankOperationMoneyAmount = request.TransferAmount,
+                CurrencyType = request.CurrencyType,
+                FromAccount = request.FromAccount,
+                ToAccount = request.ToAccount
             };
             toAccount.BankOperations.Add(bankOperationToAccount);
 
@@ -74,7 +77,11 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
                 BankOperationParticipant = toAccount.AccountType,
                 BankOperationTime = DateTime.Now,
                 BankOperationMakerId = user.UserId,
-                BankOperationMoneyAmount = request.TransferAmount
+                BankOperationMoneyAmount = request.TransferAmount,
+                CurrencyType = request.CurrencyType,
+                FromAccount = request.FromAccount,
+                ToAccount = request.ToAccount
+
             };
             fromAccount.BankOperations.Add(bankOperationFromAccount);
 
