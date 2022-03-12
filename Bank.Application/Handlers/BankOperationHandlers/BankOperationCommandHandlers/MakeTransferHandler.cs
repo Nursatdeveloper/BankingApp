@@ -27,26 +27,11 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
         }
         public async Task<BankOperationResponse> Handle(MakeTransferCommand request, CancellationToken cancellationToken)
         {
-            User fromUserByPhoneNumber = _userRepository.FindUserByPhoneNumber(request.TransferMakerTelephone);
-            User fromUserByCardNumber = _userRepository.FindUserByCardNumber(request.TransferMakerCardNumber);
-            User toUserByPhoneNumber = _userRepository.FindUserByPhoneNumber(request.ReceiverTelephone);
-            User toUserByCardNumber = _userRepository.FindUserByCardNumber(request.ReceiverCardNumber);
-            if (toUserByPhoneNumber is null && toUserByCardNumber is null)
-            {
-                BankOperationResponse userNotFoundResponse = new()
-                {
-                    IsSuccess = false,
-                    Message = "Получатель не зарегистрирован!"
-                };
-                return userNotFoundResponse;
-            }
+            User transferMaker = await _userRepository.GetUserById(request.TransferMakerId);
+            User transferReceiver = _userRepository.FindUserByPhoneNumber(request.ReceiverTelephone);
 
-            User fromUser = fromUserByPhoneNumber;
-            User toUser = toUserByPhoneNumber;
-            if (fromUser is null) { fromUser = fromUserByCardNumber; }
-            if (toUser is null) { toUser = toUserByCardNumber; }
-            Account fromAccount = fromUser.Accounts.FirstOrDefault(e => e.AccountType == request.TransferFromAccountType);
-            Account toAccount = toUser.Accounts.FirstOrDefault(e => e.AccountType == request.TransferToAccountType);
+            Account fromAccount = transferMaker.Accounts.FirstOrDefault(e => e.AccountType == request.TransferFromAccountType);
+            Account toAccount = transferReceiver.Accounts.FirstOrDefault(e => e.AccountType == request.TransferToAccountType);
 
             if(_accountValidator.AccountIsNotActiveOrBlocked(fromAccount))
             {
@@ -86,7 +71,7 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
                 BankOperationMaker = fromAccount.OwnerName,
                 BankOperationParticipant = toAccount.OwnerName,
                 BankOperationTime = DateTime.Now,
-                BankOperationMakerId = fromUser.UserId,
+                BankOperationMakerId = transferMaker.UserId,
                 BankOperationMoneyAmount = request.TransferAmount,
                 FromAccount = fromAccount.AccountType,
                 ToAccount = toAccount.AccountType,
@@ -100,7 +85,7 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
                 BankOperationMaker = fromAccount.OwnerName,
                 BankOperationParticipant = toAccount.OwnerName,
                 BankOperationTime = DateTime.Now,
-                BankOperationMakerId = toUser.UserId,
+                BankOperationMakerId = transferReceiver.UserId,
                 BankOperationMoneyAmount = request.TransferAmount,
                 FromAccount = fromAccount.AccountType,
                 ToAccount = toAccount.AccountType,
