@@ -2,6 +2,7 @@
 using iText.Html2pdf;
 using iText.Kernel.Pdf;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,6 +21,14 @@ namespace Bank.API.Controllers
         public DocumentController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+        [HttpGet]
+        [Route("get-account-contract-template")]
+        [Authorize(Roles = "Пользователь")]
+        public async Task<ActionResult> GetAccontContractTemplate()
+        {
+            var pdfFile = await _mediator.Send(new GetAccountContractTemplateCommand());
+            return File(pdfFile, "application/pdf", "Образец_договора");
         }
         [HttpPost]
         [Route("account-contract")]
