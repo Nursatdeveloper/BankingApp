@@ -1,6 +1,7 @@
 using Bank.Application.Handlers.UserCommandHandlers;
 using Bank.Application.Services;
 using Bank.Application.Services.JwtService;
+using Bank.Application.Services.PdfService;
 using Bank.Application.Validations;
 using Bank.Core.Repositories;
 using Bank.Core.Repositories.Base;
@@ -63,6 +64,7 @@ namespace Bank.API
             services.AddScoped<IAccountServices, AccountServices>();
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IPdfService, PdfService>();
             services.AddScoped<IAccountValidator, AccountValidator>();
             services.AddScoped<IUserValidator, UserValidator>();
 

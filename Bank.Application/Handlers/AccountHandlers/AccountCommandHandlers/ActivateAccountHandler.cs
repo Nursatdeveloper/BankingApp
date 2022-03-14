@@ -25,7 +25,7 @@ namespace Bank.Application.Handlers.AccountHandlers.AccountCommandHandlers
         }
         public async Task<string> Handle(ActivateAccountCommand request, CancellationToken cancellationToken)
         {
-            User user = _userRepository.FindUserByPhoneNumber(request.Telephone);
+            User user = await _userRepository.GetUserById(request.UserId);
             if(user is null)
             {
                 return "Пользователь не найден!";

@@ -16,10 +16,12 @@ namespace Bank.Application.Handlers.AccountHandlers.AccountCommandHandlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IAccountServices _accountServices;
-        public CreateAccountHandler(IUserRepository userRepository, IAccountServices accountServices)
+        private readonly IUserServices _userServices;
+        public CreateAccountHandler(IUserRepository userRepository, IAccountServices accountServices, IUserServices userServices)
         {
             _userRepository = userRepository;
             _accountServices = accountServices;
+            _userServices = userServices;
         }
         public async Task<string> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
@@ -28,12 +30,13 @@ namespace Bank.Application.Handlers.AccountHandlers.AccountCommandHandlers
             user.Accounts.Add(createdAccount);
             try
             {
+                await _userServices.Notify(user.IIN, $"Поздравляем! Вы открыли ${request.AccountType}");
                 await _userRepository.UpdateAsync(user);
-                return "Account was created";
+                return $"{request.AccountType} успешно создан!";
             }
             catch
             {
-                return "Account was not created!";
+                return $"Не удалось создать счет!";
             }  
         }
     }

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bank.Application.Commands.AccountCommands
+namespace Bank.Application.Commands.DocumentCommands
 {
-    public class ActivateAccountCommand : IRequest<string>
+    public class CreateAccountContractCommand : IRequest<byte[]>
     {
         public int UserId { get; set; }
         public string AccountType { get; set; }
-        public string Password { get; set; }
+        public bool Agree { get; set; }
     }
 }

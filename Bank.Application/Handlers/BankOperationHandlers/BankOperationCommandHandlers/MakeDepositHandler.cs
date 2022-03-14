@@ -29,19 +29,7 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
         }
         public async Task<BankOperationResponse> Handle(MakeDepositCommand request, CancellationToken cancellationToken)
         {
-            User userByPhoneNumber = _userRepository.FindUserByPhoneNumber(request.DepositMakerTelephone);
-            User userByCardNumber = _userRepository.FindUserByCardNumber(request.DepositMakerCardNumber);
-            if(userByPhoneNumber is null && userByCardNumber is null)
-            {
-                BankOperationResponse userNotFoundResponse = new()
-                {
-                    IsSuccess = false,
-                    Message = "Пользователь не найден!"
-                };
-                return userNotFoundResponse;
-            }
-            User user = userByPhoneNumber;
-            if(user is null) { user = userByCardNumber; }
+            User user = await _userRepository.GetUserById(request.UserId);
 
             Account account = user.Accounts.FirstOrDefault(e => e.AccountType == request.DepositAccountType);
             if (_accountValidator.AccountIsNotActiveOrBlocked(account))
@@ -58,12 +46,13 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
             BankOperation bankOperation = new()
             {
                 BankOperationType = "Пополнение",
-                BankOperationMaker = account.OwnerName,
-                BankOperationParticipant = "None",
+                BankOperationMaker = "Nursat Bank",
+                BankOperationParticipant = account.OwnerName,
                 BankOperationTime = DateTime.Now,
                 BankOperationMakerId = user.UserId,
                 BankOperationMoneyAmount = request.DepositAmount,
-                CurrencyType = request.CurrencyType
+                CurrencyType = request.CurrencyType,
+                ToAccount = request.DepositAccountType,
             };
             account.BankOperations.Add(bankOperation);
             await _accountRepository.UpdateAsync(account);

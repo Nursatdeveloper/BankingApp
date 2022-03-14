@@ -8,6 +8,8 @@
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
     <PackageReference Include="FluentValidation" Version="10.3.6" />
+    <PackageReference Include="itext7" Version="7.2.1" />
+    <PackageReference Include="itext7.pdfhtml" Version="4.0.1" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.16.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
@@ -16,6 +18,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Bank.Core\Bank.Core.csproj" />
     <ProjectReference Include="..\Bank.Infrastructure\Bank.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\PdfService\files\" />
   </ItemGroup>
 
 </Project>

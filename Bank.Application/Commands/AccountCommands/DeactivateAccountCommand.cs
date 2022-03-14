@@ -9,7 +9,7 @@ namespace Bank.Application.Commands.AccountCommands
 {
     public class DeactivateAccountCommand : IRequest<string>
     {
-        public string Telephone { get; set; }
+        public int UserId { get; set; }
         public string AccountType { get; set; }
         public string Password { get; set; }
     }

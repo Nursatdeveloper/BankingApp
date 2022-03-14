@@ -10,11 +10,9 @@ namespace Bank.Application.Commands.BankOperationCommands
 {
     public class MakeDepositCommand :IRequest<BankOperationResponse>
     {
-        public string DepositMaker { get; set; }
+        public int UserId { get; set; }
         public int DepositAmount { get; set; }
         public string DepositAccountType { get; set; }
-        public string DepositMakerCardNumber { get; set; }
-        public string DepositMakerTelephone { get; set; }
         public string CurrencyType { get; set; }
     }
 }
