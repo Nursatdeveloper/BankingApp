@@ -9,8 +9,6 @@ namespace Bank.Application.Services.PdfService
 {
     public interface IPdfService
     {
-        Image GenerateDocumentHeader();
-        Cell GetBankLogo();
-        Cell CreateTextCell(string text, int fontSize);
+        byte[] GetPdfBytes(string html);
     }
 }

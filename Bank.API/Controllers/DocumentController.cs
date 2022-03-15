@@ -1,4 +1,6 @@
 ﻿using Bank.Application.Commands.DocumentCommands;
+using Bank.Application.Queries.DocumentQueries;
+using Bank.Core.Entities;
 using iText.Html2pdf;
 using iText.Kernel.Pdf;
 using MediatR;
@@ -30,6 +32,23 @@ namespace Bank.API.Controllers
             var pdfFile = await _mediator.Send(new GetAccountContractTemplateCommand());
             return File(pdfFile, "application/pdf", "Образец_договора");
         }
+
+        [HttpGet]
+        [Route("get-all-documents/{userId}")]
+        public async Task<JsonResult> GetAllDocuments(int userId)
+        {
+            var documentList = await _mediator.Send(new GetAllDocumentsQuery(userId));
+            return new JsonResult(documentList);
+        }
+
+        [HttpPost]
+        [Route("find-pdf-document")]
+        public async Task<ActionResult<Document>> FindDocument([FromBody] FindDocumentCommand command)
+        {
+            var pdfDocument = await _mediator.Send(command);
+            return File(pdfDocument.DocumentBytes, "application/pdf", pdfDocument.DocumentName);
+        }
+
         [HttpPost]
         [Route("account-contract")]
         public async Task<ActionResult> AccountContract([FromBody] CreateAccountContractCommand command)
