@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Bank.Infrastructure\Bank.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\PdfService\files\" />
-  </ItemGroup>
-
 </Project>

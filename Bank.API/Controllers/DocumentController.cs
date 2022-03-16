@@ -51,6 +51,15 @@ namespace Bank.API.Controllers
             return File(pdfDocument.DocumentBytes, "application/pdf", pdfDocument.DocumentName);
         }
 
+        [HttpGet]
+        [Route("get-transfer-invoice/{id}")]
+        //[Authorize(Roles = "Пользователь")]
+        public async Task<ActionResult> GetTransferInvoice(int id)
+        {
+            var pdfDocument = await _mediator.Send(new GetTransferInvoiceQuery(id));
+            return File(pdfDocument, "application/pdf", "Квитанция");
+        }
+
         [HttpPost]
         [Route("account-contract")]
         public async Task<ActionResult> AccountContract([FromBody] CreateAccountContractCommand command)
