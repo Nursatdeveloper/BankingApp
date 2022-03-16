@@ -60,7 +60,7 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
             {
                 BankOperationType = "Пополнение",  
                 BankOperationMaker = toAccount.OwnerName,
-                BankOperationParticipant = fromAccount.AccountType,
+                BankOperationParticipant = toAccount.OwnerName,
                 BankOperationTime = DateTime.Now,
                 BankOperationMakerId = user.UserId,
                 BankOperationMoneyAmount = request.TransferAmount,
@@ -74,7 +74,7 @@ namespace Bank.Application.Handlers.BankOperationHandlers.BankOperationCommandHa
             {
                 BankOperationType = "Перевод",
                 BankOperationMaker = fromAccount.OwnerName,
-                BankOperationParticipant = toAccount.AccountType,
+                BankOperationParticipant = fromAccount.OwnerName,
                 BankOperationTime = DateTime.Now,
                 BankOperationMakerId = user.UserId,
                 BankOperationMoneyAmount = request.TransferAmount,

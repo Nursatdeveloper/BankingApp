@@ -35,6 +35,7 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-all-documents/{userId}")]
+        [Authorize(Roles = "Пользователь")]
         public async Task<JsonResult> GetAllDocuments(int userId)
         {
             var documentList = await _mediator.Send(new GetAllDocumentsQuery(userId));
@@ -43,6 +44,7 @@ namespace Bank.API.Controllers
 
         [HttpPost]
         [Route("find-pdf-document")]
+        [Authorize(Roles = "Пользователь")]
         public async Task<ActionResult<Document>> FindDocument([FromBody] FindDocumentCommand command)
         {
             var pdfDocument = await _mediator.Send(command);
