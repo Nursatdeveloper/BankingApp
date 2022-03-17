@@ -3,6 +3,7 @@ using Bank.Application.Services.PhotoService;
 using Bank.Core.Entities;
 using Bank.Core.Repositories;
 using MediatR;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Bank.Application.Handlers.UserHandlers.UserQueryHandlers
         }
         public async Task<Photo> Handle(GetUserPhotoQuery request, CancellationToken cancellationToken)
         {
+
             Photo userPhoto = await _photoRepository.GetByUserIdAsync(request.UserId);
             userPhoto.PhotoBytes = _photoService.GetBase64Image(userPhoto.PhotoBytes);
             return userPhoto;

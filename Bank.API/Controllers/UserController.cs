@@ -114,7 +114,7 @@ namespace Bank.API.Controllers
 
         [HttpPost]
         [Route("add-user-photo")]
-        public async Task<JsonResult> AddUserPhoto([FromBody] AddUserPhotoCommand command)
+        public async Task<JsonResult> AddUserPhoto([FromForm] AddUserPhotoCommand command)
         {
             var isSuccess = await _mediator.Send(command);
             if (isSuccess)

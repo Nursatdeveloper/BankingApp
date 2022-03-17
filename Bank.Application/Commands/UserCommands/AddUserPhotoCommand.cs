@@ -10,7 +10,7 @@ namespace Bank.Application.Commands.UserCommands
 {
     public class AddUserPhotoCommand : IRequest<bool>
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public IFormFile UserPhoto { get; set; }
     }
 }
