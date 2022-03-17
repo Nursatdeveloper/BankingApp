@@ -53,7 +53,7 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-transfer-invoice/{id}")]
-        //[Authorize(Roles = "Пользователь")]
+        [Authorize(Roles = "Пользователь")]
         public async Task<ActionResult> GetTransferInvoice(int id)
         {
             var pdfDocument = await _mediator.Send(new GetTransferInvoiceQuery(id));

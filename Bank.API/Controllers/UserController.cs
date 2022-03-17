@@ -105,6 +105,25 @@ namespace Bank.API.Controllers
             return await _mediator.Send(new GetUserByTelephoneQuery(telephone));
         }
 
+        [HttpGet]
+        [Route("get-user-photo/{id}")]
+        public async Task<Photo> GetUserPhoto(int id)
+        {
+            return await _mediator.Send(new GetUserPhotoQuery(id));
+        }
+
+        [HttpPost]
+        [Route("add-user-photo")]
+        public async Task<JsonResult> AddUserPhoto([FromBody] AddUserPhotoCommand command)
+        {
+            var isSuccess = await _mediator.Send(command);
+            if (isSuccess)
+            {
+                return new JsonResult("Фотография сохранена!");
+            }
+            return new JsonResult("Не удалось сохранить фотографию!");
+        }
+
         [HttpPost]
         [Route("change-notification-status")]
         public async Task<JsonResult> ChangeNotificationStatus([FromBody] ChangeUserNotificationStatusCommand command)
