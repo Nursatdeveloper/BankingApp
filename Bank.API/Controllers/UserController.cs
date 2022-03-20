@@ -60,6 +60,19 @@ namespace Bank.API.Controllers
 
         }
 
+        [HttpPost] 
+        [Route("create-employee")]
+        //[Authorize(Roles = "Администратор")]
+        public async Task<JsonResult> CreateEmployee([FromBody] CreateEmployeeCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if(result == true)
+            {
+                return new JsonResult($"Новый {command.Role} успешно добавлен!");
+            }
+            return new JsonResult($"Не удалось добавить сотрудника");
+        }
+
         [HttpDelete]
         [Route("delete/{id}")]
         [Authorize(Roles = "Администратор")]
@@ -107,9 +120,14 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-user-photo/{id}")]
-        public async Task<Photo> GetUserPhoto(int id)
+        public async Task<ActionResult<Photo>> GetUserPhoto(int id)
         {
-            return await _mediator.Send(new GetUserPhotoQuery(id));
+            var result = await _mediator.Send(new GetUserPhotoQuery(id));
+            if(result != null)
+            {
+                return result;
+            }
+            return new JsonResult("null");
         }
 
         [HttpPost]

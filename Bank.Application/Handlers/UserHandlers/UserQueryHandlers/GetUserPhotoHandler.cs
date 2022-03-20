@@ -26,6 +26,10 @@ namespace Bank.Application.Handlers.UserHandlers.UserQueryHandlers
         {
 
             Photo userPhoto = await _photoRepository.GetByUserIdAsync(request.UserId);
+            if (userPhoto == null)
+            {
+                return null;
+            }
             userPhoto.PhotoBytes = _photoService.GetBase64Image(userPhoto.PhotoBytes);
             return userPhoto;
         }

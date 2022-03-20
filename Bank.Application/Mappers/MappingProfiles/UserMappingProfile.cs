@@ -16,6 +16,7 @@ namespace Bank.Application.Mappers.MappingProfiles
         {
             CreateMap<User, UserResponse>().ReverseMap();
             CreateMap<User, CreateUserCommand>().ReverseMap();
+            CreateMap<User, CreateEmployeeCommand>().ReverseMap();
         }
     }
 }

@@ -28,14 +28,16 @@ namespace Bank.Application.Handlers.UserHandlers.UserCommandHandlers
             }
 
             string userId = JsonConvert.DeserializeObject<string>(request.UserId);
+            int id = Convert.ToInt32(userId);
             Photo userPhoto = await _photoRepository.GetByUserIdAsync(Int32.Parse(userId));
 
             if(userPhoto == null)
             {
+                userPhoto = new Photo();
                 using (var stream = new MemoryStream())
                 {
                     await request.UserPhoto.CopyToAsync(stream);
-                    userPhoto.UserId = Int32.Parse(userId);
+                    userPhoto.UserId = id;
                     userPhoto.PhotoBytes = stream.ToArray();
                 }
                 var photoResult = await _photoRepository.AddAsync(userPhoto);
@@ -49,7 +51,7 @@ namespace Bank.Application.Handlers.UserHandlers.UserCommandHandlers
                 using (var stream = new MemoryStream())
                 {
                     await request.UserPhoto.CopyToAsync(stream);
-                    userPhoto.UserId = Int32.Parse(userId);
+                    userPhoto.UserId = id;
                     userPhoto.PhotoBytes = stream.ToArray();
                 }
                 await _photoRepository.UpdateAsync(userPhoto);

@@ -55,7 +55,7 @@ namespace Bank.Application.Handlers.AccountHandlers.AccountCommandHandlers
             try
             {
                 await _documentRepository.AddAsync(pdfContract);
-                await _userServices.Notify(user.IIN, $"Поздравляем! Вы открыли ${request.AccountType}");
+                await _userServices.Notify(user.IIN, $"Поздравляем! Вы открыли {request.AccountType}");
                 await _userRepository.UpdateAsync(user);
                 return $"{request.AccountType} успешно создан!";
             }

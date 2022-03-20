@@ -60,13 +60,7 @@ namespace Bank.API.Controllers
             return File(pdfDocument, "application/pdf", "Квитанция");
         }
 
-        [HttpPost]
-        [Route("account-contract")]
-        public async Task<ActionResult> AccountContract([FromBody] CreateAccountContractCommand command)
-        {
-            var pdfFile = await _mediator.Send(command);
-            return File(pdfFile, "application/pdf", "Document");
-        }
+
 
     }
 }
