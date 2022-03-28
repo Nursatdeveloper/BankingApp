@@ -69,7 +69,7 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-accounts/{id}")]
-        [Authorize(Roles = "Пользователь")]
+        [Authorize(Roles = "Пользователь, Администратор")]
         public async Task<List<Account>> GetAccountsByUserId(int id)
         {
             var accounts = await _mediator.Send(new GetAccountsByUserIdQuery(id));

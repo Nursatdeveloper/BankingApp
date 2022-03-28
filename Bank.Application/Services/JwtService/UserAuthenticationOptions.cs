@@ -12,7 +12,7 @@ namespace Bank.Application.Services.JwtService
         public const string ISSUER = "BankServer"; 
         public const string AUDIENCE = "BankClient"; 
         const string KEY = "secret_key_which_is_actually_not_secret";
-        public const int LIFETIME = 1;
+        public const int LIFETIME = 60;
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));

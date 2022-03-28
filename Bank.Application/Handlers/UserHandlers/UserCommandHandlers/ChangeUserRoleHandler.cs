@@ -23,7 +23,7 @@ namespace Bank.Application.Handlers.UserHandlers.UserCommandHandlers
             User user = await _userRepository.GetUserById(request.UserId);
             user.Role = request.Role;
             await _userRepository.UpdateAsync(user);
-            return $"Роль был изменен на: ${request.Role}!";
+            return $"Роль был изменен на: {request.Role}!";
         }
     }
 }

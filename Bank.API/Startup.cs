@@ -88,7 +88,9 @@ namespace Bank.API
                             ValidateLifetime = true,
                             IssuerSigningKey = UserAuthenticationOptions.GetSymmetricSecurityKey(),
                             ValidateIssuerSigningKey = true,
+                            
                        };
+                      
                    });
 
         }

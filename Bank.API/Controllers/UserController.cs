@@ -62,7 +62,7 @@ namespace Bank.API.Controllers
 
         [HttpPost] 
         [Route("create-employee")]
-        //[Authorize(Roles = "Администратор")]
+        [Authorize(Roles = "Администратор")]
         public async Task<JsonResult> CreateEmployee([FromBody] CreateEmployeeCommand command)
         {
             var result = await _mediator.Send(command);
@@ -97,10 +97,17 @@ namespace Bank.API.Controllers
 
         [HttpGet]
         [Route("get-user-by-id/{id}")]
-        [Authorize(Roles = "Пользователь")]
+        [Authorize(Roles = "Пользователь, Администратор")]
         public async Task<User> GetUserById(int id)
         {
             return await _mediator.Send(new GetUserByIdQuery(id));
+        }
+
+        [HttpGet]
+        [Route("get-user-by-telephone/{telephone}")]
+        public async Task<UserResponse> GetUserByTelephone(string telephone)
+        {
+            return await _mediator.Send(new GetUserByTelephoneQuery(telephone));
         }
 
         [HttpGet]
@@ -111,11 +118,16 @@ namespace Bank.API.Controllers
             return await _mediator.Send(new GetNotificationsByUserIdQuery(id));
         }
 
-        [HttpGet]
-        [Route("get-user-by-telephone/{telephone}")]
-        public async Task<UserResponse> GetUserByTelephone(string telephone)
+        [HttpPost]
+        [Route("change-notification-status")]
+        public async Task<JsonResult> ChangeNotificationStatus([FromBody] ChangeUserNotificationStatusCommand command)
         {
-            return await _mediator.Send(new GetUserByTelephoneQuery(telephone));
+            var result = await _mediator.Send(command);
+            if (result == true)
+            {
+                return new JsonResult("true");
+            }
+            return new JsonResult("false");
         }
 
         [HttpGet]
@@ -127,7 +139,7 @@ namespace Bank.API.Controllers
             {
                 return result;
             }
-            return new JsonResult("null");
+            return NotFound();
         }
 
         [HttpPost]
@@ -142,16 +154,13 @@ namespace Bank.API.Controllers
             return new JsonResult("Не удалось сохранить фотографию!");
         }
 
-        [HttpPost]
-        [Route("change-notification-status")]
-        public async Task<JsonResult> ChangeNotificationStatus([FromBody] ChangeUserNotificationStatusCommand command)
+        [HttpGet]
+        [Route("get-general-information")]
+        [Authorize(Roles = "Администратор")]
+        public async Task<JsonResult> GetGeneralInformation()
         {
-            var result = await _mediator.Send(command);
-            if(result == true)
-            {
-                return new JsonResult("true");
-            }
-            return new JsonResult("false");
+            var result = await _mediator.Send(new GetGeneralInfoAboutUserQuery());
+            return new JsonResult(result);
         }
 
 
