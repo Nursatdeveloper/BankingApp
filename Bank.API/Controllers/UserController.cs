@@ -130,6 +130,19 @@ namespace Bank.API.Controllers
             return new JsonResult("false");
         }
 
+        [HttpPost]
+        [Route("send-notification")]
+        [Authorize(Roles = "Администратор")]
+        public async Task<JsonResult> SendNotification([FromBody] SendNotificationToUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if(result == true)
+            {
+                return new JsonResult("Уведомление отправлено!");
+            }
+            return new JsonResult("Не удалось отправить уведомление!");
+        }
+
         [HttpGet]
         [Route("get-user-photo/{id}")]
         public async Task<ActionResult<Photo>> GetUserPhoto(int id)
