@@ -67,4 +67,21 @@ API endpoints are described below.
      x-powered-by: ASP.NET 
      
     {"id":2,"firstName":"John","lastName":"Doe", role="Администратор"}
+    
+    
+## Add user photo and save in binary
+### Request
+`POST user/add-user-photo`
+
+    curl -X POST "https://localhost:44324/api/v1/User/add-user-photo" -H  "accept: */*" -H  "Content-Type: multipart/form-data" -F "UserId=1" -F "UserPhoto=@userImage.png;type=image/png"
+
+### Response
+
+     access-control-allow-origin: * 
+     content-type: application/json; charset=utf-8 
+     date: Fri08 Apr 2022 15:08:53 GMT 
+     server: Microsoft-IIS/10.0 
+     x-powered-by: ASP.NET 
+     
+    {"message" : 'Photo is saved!"}
 
