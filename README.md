@@ -84,4 +84,88 @@ API endpoints are described below.
      x-powered-by: ASP.NET 
      
     {"message" : 'Photo is saved!"}
+    
+# AccountController
+
+## Create new Account
+### Request
+`POST account/create-account`
+
+    curl -X POST "https://localhost:44324/api/v1/Account/create-account" -H  "accept: */*" -H  "Content-Type: "application/json" -F "UserId=1" -F "AccountType=Депозит"
+
+### Response
+
+     access-control-allow-origin: * 
+     content-type: application/json; charset=utf-8 
+     date: Fri08 Apr 2022 15:08:53 GMT 
+     server: Microsoft-IIS/10.0 
+     x-powered-by: ASP.NET 
+     
+    {"message" : 'Account was created!"}
+    
+    
+## Activate an Account
+### Request
+`POST account/activate-account`
+
+    curl -X POST "https://localhost:44324/api/v1/Account/activate-account" -H  "accept: */*" -H  "Content-Type: "application/json" -F "UserId=1" -F "AccountType=Депозит" -F "Password=userPassword"
+
+### Response
+
+     access-control-allow-origin: * 
+     content-type: application/json; charset=utf-8 
+     date: Fri08 Apr 2022 15:08:53 GMT 
+     server: Microsoft-IIS/10.0 
+     x-powered-by: ASP.NET 
+     
+    {"message" : 'Account was activated!"}
+    
+## Deactivate an Account
+### Request
+`POST account/deactivate-account`
+
+    curl -X POST "https://localhost:44324/api/v1/Account/deactivate-account" -H  "accept: */*" -H  "Content-Type: "application/json" -F "UserId=1" -F "AccountType=Депозит" -F "Password=userPassword"
+
+### Response
+
+     access-control-allow-origin: * 
+     content-type: application/json; charset=utf-8 
+     date: Fri08 Apr 2022 15:08:53 GMT 
+     server: Microsoft-IIS/10.0 
+     x-powered-by: ASP.NET 
+     
+    {"message" : 'Account was deactivated!"}
+
+## Block an Account
+### Request
+`POST account/block-account`
+
+    curl -X POST "https://localhost:44324/api/v1/Account/block-account" -H  "accept: */*" -H  "Content-Type: "application/json" -F "UserId=1" -F "AccountType=Депозит" -F "Password=adminPassword"
+
+### Response
+
+     access-control-allow-origin: * 
+     content-type: application/json; charset=utf-8 
+     date: Fri08 Apr 2022 15:08:53 GMT 
+     server: Microsoft-IIS/10.0 
+     x-powered-by: ASP.NET 
+     
+    {"message" : 'Account was blocked by admin!"}
+    
+## Unblock an Account
+### Request
+`POST account/unblock-account`
+
+    curl -X POST "https://localhost:44324/api/v1/Account/unblock-account" -H  "accept: */*" -H  "Content-Type: "application/json" -F "UserId=1" -F "AccountType=Депозит" -F "Password=adminPassword"
+
+### Response
+
+     access-control-allow-origin: * 
+     content-type: application/json; charset=utf-8 
+     date: Fri08 Apr 2022 15:08:53 GMT 
+     server: Microsoft-IIS/10.0 
+     x-powered-by: ASP.NET 
+     
+    {"message" : 'Account was unblocked by admin!"}
+
 
