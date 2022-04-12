@@ -3,7 +3,7 @@ Backend for Banking application with Command Query Responsibility Segregation (S
 
 The Application is divided into Core, Infrastructure, Application, and API projects.
 
-`CORE` project contains entities and abstraction.
+`CORE` project contains entities and interfaces.
 
 `INFRASTRUCTURE` project contains DbSets for each entity.
 
