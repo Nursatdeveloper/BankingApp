@@ -1,5 +1,5 @@
 # BankingApp
-Backend for Banking application with Command Query Responsibility Segregation (SQRS) Pattern.
+Backend for Banking application with Command Query Responsibility Segregation (CQRS) Pattern.
 
 The Application is divided into Core, Infrastructure, Application, and API projects.
 
