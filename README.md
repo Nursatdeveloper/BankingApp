@@ -9,7 +9,7 @@ The Application is divided into Core, Infrastructure, Application, and API proje
 
 `APPLICATION` project contains business logic.
 
-`API project` contains controllers that interact with the other projects with Mediatr.
+`API` project contains controllers that interact with the other projects using Mediatr.
 
 # REST API
 
